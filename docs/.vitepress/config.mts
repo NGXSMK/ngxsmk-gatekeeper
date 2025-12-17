@@ -5,7 +5,10 @@ export default defineConfig({
   description: 'A framework-agnostic middleware engine for Angular that provides route and HTTP request protection through a composable middleware pattern.',
   
   // Base URL for deployment
-  base: '/',
+  // For GitHub Pages: use '/ngxsmk-gatekeeper/' for project pages
+  // Use '/' if you have a custom domain or user/org page
+  // Can be overridden with VITEPRESS_BASE environment variable
+  base: process.env.VITEPRESS_BASE || (process.env.NODE_ENV === 'production' ? '/ngxsmk-gatekeeper/' : '/'),
   
   // Language
   lang: 'en-US',
@@ -33,7 +36,7 @@ export default defineConfig({
     
     // Edit link
     editLink: {
-      pattern: 'https://github.com/your-username/ngxsmk-gatekeeper/edit/main/docs/:path',
+      pattern: 'https://github.com/NGXSMK/ngxsmk-gatekeeper/edit/main/docs/:path',
       text: 'Edit this page on GitHub',
     },
     
@@ -44,7 +47,7 @@ export default defineConfig({
     
     // Social links
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/your-username/ngxsmk-gatekeeper' }
+      { icon: 'github', link: 'https://github.com/NGXSMK/ngxsmk-gatekeeper' }
     ],
     
     // Navbar
@@ -53,7 +56,7 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Examples', link: '/examples/' },
       { text: 'API', link: '/api/' },
-      { text: 'GitHub', link: 'https://github.com/your-username/ngxsmk-gatekeeper' }
+      { text: 'GitHub', link: 'https://github.com/NGXSMK/ngxsmk-gatekeeper' }
     ],
     
     // Sidebar
