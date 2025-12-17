@@ -13,7 +13,6 @@ export function initCommand(): Command {
       try {
         const configPath = path.join(process.cwd(), 'gatekeeper.config.json');
         
-        // Check if config exists
         if (fs.existsSync(configPath) && !options.force) {
           console.log(chalk.yellow('Configuration file already exists. Use --force to overwrite.'));
           return;
@@ -22,14 +21,12 @@ export function initCommand(): Command {
         let config: any = {};
 
         if (options.yes) {
-          // Use defaults
           config = {
             middlewares: [],
             onFail: '/login',
             debug: false,
           };
         } else {
-          // Interactive prompts
           const answers = await inquirer.prompt([
             {
               type: 'input',
@@ -58,11 +55,9 @@ export function initCommand(): Command {
           };
         }
 
-        // Write config file
         fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
         console.log(chalk.green(`✓ Configuration file created: ${configPath}`));
 
-        // Create example middleware file if requested
         if (!options.yes) {
           const { createExample } = await inquirer.prompt([
             {

@@ -75,30 +75,23 @@ export function createAuditMiddleware(
   const sinkArray = Array.isArray(sinks) ? sinks : [sinks];
 
   return createMiddleware('audit', async (context: MiddlewareContext) => {
-    // Extract resource information
     const resource = 
       (context['url'] as string) || 
       (context['path'] as string) || 
       (context['route'] as { path?: string } | undefined)?.path ||
       'unknown';
 
-    // Extract HTTP method
     const method = context['method'] as string | undefined;
 
-    // Determine context type
     const contextType: 'route' | 'http' = context['request'] ? 'http' : 'route';
-
-    // Extract user identifier (sanitized)
     const userIdPaths = Array.isArray(userIdPath) ? userIdPath : [userIdPath];
     const userId = extractUserId(context as Record<string, unknown>, userIdPaths);
 
-    // Extract metadata if requested
     let metadata: Record<string, unknown> | undefined;
     if (includeMetadata) {
       const sanitizedContext = sanitizeObject(context, excludeFields);
       
       if (metadataFields.length > 0) {
-        // Only include specified fields
         metadata = {};
         for (const field of metadataFields) {
           const value = getValueByPath(sanitizedContext, field);
@@ -107,12 +100,10 @@ export function createAuditMiddleware(
           }
         }
       } else {
-        // Include all sanitized context (excluding PII)
         metadata = sanitizedContext;
       }
     }
 
-    // Create audit log entry
     const entry: AuditLogEntry = {
       id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       timestamp: new Date().toISOString(),
@@ -124,18 +115,11 @@ export function createAuditMiddleware(
       ...(metadata && { metadata }),
     };
 
-    // Note: This middleware always allows, as it's meant to be used
-    // to wrap/log the final decision. The actual decision is logged
-    // by the audit wrapper in the guard/interceptor.
-    // For now, we'll log that the audit middleware passed.
-    // The actual allow/deny decision should be logged by the audit wrapper.
-
     // Log to all sinks (fire and forget - don't block execution)
     for (const sink of sinkArray) {
       try {
         const result = sink.log(entry);
         if (result instanceof Promise) {
-          // Don't await - log asynchronously
           result.catch((error) => {
             console.error('[Audit] Sink logging error:', error);
           });
@@ -185,30 +169,25 @@ export async function logAuditDecision(
   const userIdPaths = Array.isArray(userIdPath) ? userIdPath : [userIdPath];
   const userId = extractUserId(context as Record<string, unknown>, userIdPaths);
 
-  // Extract metadata if requested
   let metadata: Record<string, unknown> | undefined;
   if (includeMetadata) {
-    const sanitizedContext = sanitizeObject(context, excludeFields);
-    
-    if (metadataFields.length > 0) {
-      // Only include specified fields
-      metadata = {};
+      const sanitizedContext = sanitizeObject(context, excludeFields);
+      
+      if (metadataFields.length > 0) {
+        metadata = {};
       for (const field of metadataFields) {
         const value = getValueByPath(sanitizedContext, field);
         if (value !== undefined) {
-          metadata[field] = value;
+            metadata[field] = value;
+          }
         }
+      } else {
+        metadata = sanitizedContext;
       }
-    } else {
-      // Include all sanitized context (excluding PII)
-      metadata = sanitizedContext;
     }
-  }
 
-  // Determine context type
   const contextType: 'route' | 'http' = context['request'] ? 'http' : 'route';
 
-  // Create audit log entry
   const entry: AuditLogEntry = {
     id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     timestamp: new Date().toISOString(),
@@ -222,7 +201,6 @@ export async function logAuditDecision(
     ...(metadata && { metadata }),
   };
 
-  // Log to all sinks
   const logPromises = sinkArray.map(async (sink) => {
     try {
       const result = sink.log(entry);
@@ -234,7 +212,6 @@ export async function logAuditDecision(
     }
   });
 
-  // Wait for all sinks to complete (but don't throw errors)
   await Promise.allSettled(logPromises);
 }
 

@@ -94,9 +94,6 @@ export class ExtensionRegistry {
       this.extensions.delete(extensionId);
       this.registrations.delete(extensionId);
 
-      // Clear middleware registered by this extension
-      // Note: This is a simplified implementation
-      // In a real scenario, you'd track which middleware belongs to which extension
       this.preMiddleware = [];
       this.postMiddleware = [];
       this.mergedMiddleware = [];
