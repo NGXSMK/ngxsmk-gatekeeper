@@ -297,6 +297,17 @@ const middlewares = [createAuthMiddleware()];
 // Ensure middlewares array is not empty
 ```
 
+### 6. Complement with Security Agent
+
+Use the [Gatekeeper Agent](../agent/README.md) to monitor for configuration gaps or anomalies that might bypass your Zero Trust rules in real-time.
+
+```typescript
+provideGatekeeperAgent({
+  mode: 'enforce',
+  scanOnStartup: true
+});
+```
+
 ## Security Considerations
 
 1. **No Silent Failures**: Zero trust mode ensures that missing middleware configuration results in explicit denial, preventing accidental exposure of protected resources.
