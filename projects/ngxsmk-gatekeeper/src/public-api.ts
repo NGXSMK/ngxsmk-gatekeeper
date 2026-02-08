@@ -25,7 +25,7 @@ export type { MiddlewareHandler, NamedMiddleware, MiddlewarePipeline } from './l
 
 // Feature flag providers
 export type { FeatureFlagProvider } from './lib/providers';
-export { 
+export {
   FEATURE_FLAG_PROVIDER,
   provideFeatureFlagProvider,
   LocalStorageFeatureFlagProvider,
@@ -35,14 +35,14 @@ export type { RemoteApiFeatureFlagProviderConfig } from './lib/providers';
 
 // SSR adapter (optional - for Angular Universal support)
 export type { SsrAdapterConfig } from './lib/angular';
-export { 
+export {
   provideSsrAdapter,
   SsrAdapter,
   SSR_ADAPTER,
 } from './lib/angular';
 
 // Benchmark utilities (optional - for performance monitoring)
-export type { 
+export type {
   BenchmarkConfig,
   MiddlewareBenchmarkStats,
   ChainBenchmarkStats,
@@ -53,7 +53,7 @@ export {
 } from './lib/core/benchmark';
 
 // Policy engine (optional - for enterprise policy management)
-export type { 
+export type {
   Policy,
   PolicyEvaluator,
   PolicyRegistry,
@@ -122,10 +122,21 @@ export type {
 export {
   securityHeadersMiddleware,
   createSecurityHeaders,
+  createCSP,
+  createHSTS,
+  createFrameOptions,
+  createContentTypeOptions,
+  createXSSProtection,
+  createReferrerPolicy,
+  createPermissionsPolicy,
 } from './lib/security-headers';
 export type {
   SecurityHeadersConfig,
   CommonSecurityHeadersOptions,
+  CSPOptions,
+  HSTSOptions,
+  FrameOptionsValue,
+  CSPDirectives,
 } from './lib/security-headers';
 
 // Tamper detection (optional - for detecting misconfiguration and tampering)
@@ -240,6 +251,7 @@ export {
   createWebhookSignatureMiddleware,
   createDeviceFingerprintMiddleware,
   createUserAgentMiddleware,
+  createBotProtectionMiddleware,
 } from './lib/middlewares';
 export type {
   IPWhitelistMiddlewareOptions,
@@ -251,6 +263,7 @@ export type {
   WebhookSignatureMiddlewareOptions,
   DeviceFingerprintMiddlewareOptions,
   UserAgentMiddlewareOptions,
+  BotProtectionMiddlewareOptions,
 } from './lib/middlewares';
 
 // Access control middleware
@@ -535,3 +548,6 @@ export type {
   WebSocketClientHandlers,
   ObservabilityIntegrationOptions,
 } from './lib/observability';
+
+// Agent mode
+export * from './lib/agent';

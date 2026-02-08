@@ -163,14 +163,14 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
-### Dashboard Component
+### Dashboard Component (with Signals)
 
 ```typescript
 @Component({
   selector: 'app-dashboard',
   template: `
-    <div *ngIf="connected$ | async">
-      <div *ngIf="stats$ | async as stats">
+    <div *ngIf="connected()">
+      <div *ngIf="stats() as stats">
         <p>Total: {{ stats.totalRequests }}</p>
         <p>Success: {{ stats.successfulRequests }}</p>
         <p>Avg Time: {{ stats.averageResponseTime }}ms</p>
@@ -179,8 +179,8 @@ bootstrapApplication(AppComponent, {
   `,
 })
 export class DashboardComponent {
-  stats$ = this.observability.stats$;
-  connected$ = this.observability.connected$;
+  stats = this.observability.stats;
+  connected = this.observability.connected;
 
   constructor(private observability: ObservabilityService) {}
 }

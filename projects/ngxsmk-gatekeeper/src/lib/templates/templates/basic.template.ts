@@ -33,7 +33,7 @@ export function createBasicTemplate(): Template {
       description: 'Simple template with authentication only - perfect for getting started',
       category: TemplateCategory.Basic,
       tags: ['basic', 'simple', 'starter', 'auth'],
-      version: '1.0.0',
+      version: '1.1.0',
       examples: [
         'Simple applications',
         'Getting started',

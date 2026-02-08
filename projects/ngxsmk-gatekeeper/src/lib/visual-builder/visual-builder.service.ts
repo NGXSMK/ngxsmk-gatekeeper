@@ -4,7 +4,7 @@
  * Manages the state and operations of the visual middleware builder
  */
 
-import { Injectable, Inject, Optional } from '@angular/core';
+import { Injectable, Inject, Optional, signal, WritableSignal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   VisualBuilderState,
@@ -31,12 +31,16 @@ export class VisualBuilderService {
   private stateSubject = new BehaviorSubject<VisualBuilderState>(this.createInitialState());
   private history: BuilderAction[] = [];
   private historyIndex = -1;
+
+  /** Signal of builder state */
+  readonly stateSignal: WritableSignal<VisualBuilderState> = signal<VisualBuilderState>(this.createInitialState());
+
   /** Observable of builder state */
   readonly state$: Observable<VisualBuilderState> = this.stateSubject.asObservable();
 
   /** Current state */
   get state(): VisualBuilderState {
-    return this.stateSubject.value;
+    return this.stateSignal();
   }
 
   constructor(@Optional() @Inject('VisualBuilderConfig') config?: VisualBuilderConfig) {
@@ -290,7 +294,7 @@ export class VisualBuilderService {
    */
   export(): VisualBuilderExport {
     return {
-      version: '1.0.0',
+      version: '1.1.0',
       state: this.state,
       metadata: {
         createdAt: new Date().toISOString(),
@@ -549,8 +553,10 @@ export class VisualBuilderService {
    * Update state
    */
   private updateState(updates: Partial<VisualBuilderState>): void {
-    const newState = { ...this.state, ...updates };
+    const currentState = this.stateSignal();
+    const newState = { ...currentState, ...updates };
     this.stateSubject.next(newState);
+    this.stateSignal.set(newState);
   }
 
   /**

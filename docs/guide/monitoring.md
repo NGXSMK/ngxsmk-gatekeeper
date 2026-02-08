@@ -197,6 +197,7 @@ const errorLogging = createRequestLoggingMiddleware({
 
 ## Next Steps
 
+- [Gatekeeper Agent](/guide/agent) - Autonomous security monitoring
 - [Performance](/guide/performance) - Performance optimization
 - [Debug Mode](/guide/debug-mode) - Debugging tools
 

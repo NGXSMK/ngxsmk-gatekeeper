@@ -49,7 +49,7 @@ export function createECommerceTemplate(): Template {
       description: 'Template for e-commerce applications with payment protection, CSRF, and session management',
       category: TemplateCategory.ECommerce,
       tags: ['ecommerce', 'payment', 'cart', 'security'],
-      version: '1.0.0',
+      version: '1.1.0',
       examples: [
         'Online stores',
         'Shopping carts',

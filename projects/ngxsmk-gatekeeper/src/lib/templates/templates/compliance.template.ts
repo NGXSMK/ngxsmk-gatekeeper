@@ -52,7 +52,7 @@ export function createComplianceTemplate(): Template {
       description: 'Template configured for SOC2, ISO 27001, and similar compliance frameworks',
       category: TemplateCategory.Compliance,
       tags: ['compliance', 'soc2', 'iso27001', 'audit', 'enterprise'],
-      version: '1.0.0',
+      version: '1.1.0',
       examples: [
         'SOC2 compliance',
         'ISO 27001 compliance',

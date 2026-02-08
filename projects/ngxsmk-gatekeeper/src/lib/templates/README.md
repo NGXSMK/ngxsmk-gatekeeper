@@ -63,7 +63,7 @@ const myTemplate: Template = {
     name: 'My Template',
     description: 'Custom template',
     category: TemplateCategory.Basic,
-    version: '1.0.0',
+    version: '1.1.0',
   },
   factory: async (options = {}) => {
     return {

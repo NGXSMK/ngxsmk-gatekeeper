@@ -9,6 +9,7 @@ The library is designed to work with Angular Universal and SSR:
 - No browser-only APIs in core
 - Platform detection for browser features
 - SSR adapter support
+- **Signals & SSR** - Signals are fully supported in SSR, providing hydration-friendly reactive states.
 
 ## Platform Detection
 

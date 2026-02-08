@@ -1,25 +1,12 @@
 import { MiddlewareContext, MiddlewareResult, NgxMiddleware } from './middleware.types';
 import { DebugOptions } from './debug';
+import { DEFAULT_SENSITIVE_FIELDS } from '../helpers';
 
 /**
  * Sensitive data keys that should be filtered from debug output
  * These keys are commonly used for authentication tokens, passwords, etc.
  */
-const SENSITIVE_KEYS = new Set([
-  'password',
-  'token',
-  'accessToken',
-  'refreshToken',
-  'authToken',
-  'authorization',
-  'apiKey',
-  'secret',
-  'privateKey',
-  'credentials',
-  'cookie',
-  'session',
-  'sessionId',
-]);
+const SENSITIVE_KEYS = new Set(DEFAULT_SENSITIVE_FIELDS);
 
 /**
  * Recursively filters sensitive data from an object
@@ -47,7 +34,7 @@ function filterSensitiveData(obj: unknown, depth = 0, maxDepth = 3): unknown {
   const filtered: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(obj)) {
     const lowerKey = key.toLowerCase();
-    
+
     // Filter out sensitive keys
     if (SENSITIVE_KEYS.has(lowerKey)) {
       filtered[key] = '[Filtered]';
@@ -165,22 +152,22 @@ export interface NgxsmkGatekeeperDebugHook {
    * Get all chain execution records
    */
   getChains(): ChainExecutionRecord[];
-  
+
   /**
    * Get all middleware execution records
    */
   getMiddlewareExecutions(): MiddlewareExecutionRecord[];
-  
+
   /**
    * Get the latest chain execution
    */
   getLatestChain(): ChainExecutionRecord | null;
-  
+
   /**
    * Clear all execution records
    */
   clear(): void;
-  
+
   /**
    * Get execution statistics
    */
@@ -238,11 +225,11 @@ class ExecutionStore {
     const totalMiddlewareExecutions = this.middlewareExecutions.length;
     const passedChains = this.chains.filter(c => c.result).length;
     const failedChains = totalChains - passedChains;
-    
+
     const averageChainDuration = totalChains > 0
       ? this.chains.reduce((sum, c) => sum + c.totalDuration, 0) / totalChains
       : 0;
-    
+
     const averageMiddlewareDuration = totalMiddlewareExecutions > 0
       ? this.middlewareExecutions.reduce((sum, m) => sum + m.duration, 0) / totalMiddlewareExecutions
       : 0;

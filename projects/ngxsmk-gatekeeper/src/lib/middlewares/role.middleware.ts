@@ -1,4 +1,4 @@
-import { createMiddleware } from '../helpers';
+import { createMiddleware, getValueByPath } from '../helpers';
 import { MiddlewareContext } from '../core';
 
 /**
@@ -25,21 +25,6 @@ export interface RoleMiddlewareOptions {
    * Default: true
    */
   requireUser?: boolean;
-}
-
-/**
- * Gets a value from an object using a dot-separated path
- */
-function getValueByPath(obj: unknown, path: string): unknown {
-  const keys = path.split('.');
-  let current: unknown = obj;
-  for (const key of keys) {
-    if (current == null || typeof current !== 'object') {
-      return undefined;
-    }
-    current = (current as Record<string, unknown>)[key];
-  }
-  return current;
 }
 
 /**

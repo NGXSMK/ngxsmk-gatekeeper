@@ -48,7 +48,7 @@ export async function loadBuiltInTemplates(registry: TemplateRegistry): Promise<
       name: 'Authentication Preset',
       description: 'Authentication middleware preset',
       category: TemplateCategory.Basic,
-      version: '1.0.0',
+      version: '1.1.0',
     },
     factory: async (options) => {
       const preset = authPresetModule.authPreset(options as any);
@@ -65,7 +65,7 @@ export async function loadBuiltInTemplates(registry: TemplateRegistry): Promise<
       name: 'Admin Preset',
       description: 'Admin access preset with authentication and role checks',
       category: TemplateCategory.Admin,
-      version: '1.0.0',
+      version: '1.1.0',
     },
     factory: async (options) => {
       const preset = adminPresetModule.adminPreset(options as any);

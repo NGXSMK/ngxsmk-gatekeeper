@@ -17,6 +17,7 @@ export * from './account-lockout.middleware';
 export * from './webhook-signature.middleware';
 export * from './device-fingerprint.middleware';
 export * from './user-agent.middleware';
+export * from './bot-protection.middleware';
 
 // Access control middleware
 export * from './time-window.middleware';

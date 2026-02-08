@@ -63,7 +63,7 @@ export function createSecurityTemplate(): Template {
       description: 'High-security template with multiple layers of protection',
       category: TemplateCategory.Security,
       tags: ['security', 'enterprise', 'compliance', 'audit'],
-      version: '1.0.0',
+      version: '1.1.0',
       examples: [
         'Financial applications',
         'Healthcare systems',

@@ -64,20 +64,22 @@ const code = generateCode(state, {
 
 ## Usage
 
-### Basic Setup
+### Basic Setup (with Signals)
 
 ```typescript
 import { VisualBuilderService } from 'ngxsmk-gatekeeper/lib/visual-builder';
-import { TemplateRegistry, createDefaultTemplateRegistry } from 'ngxsmk-gatekeeper/lib/visual-builder';
+import { Component, effect } from '@angular/core';
 
-const builderService = new VisualBuilderService();
-const templateRegistry = createDefaultTemplateRegistry();
+@Component({/*...*/})
+export class BuilderComponent {
+  state = this.builderService.stateSignal;
 
-// Subscribe to state changes
-builderService.state$.subscribe((state) => {
-  console.log('Nodes:', state.nodes);
-  console.log('Connections:', state.connections);
-});
+  constructor(private builderService: VisualBuilderService) {
+    effect(() => {
+      console.log('Builder State:', this.state());
+    });
+  }
+}
 ```
 
 ### Drag and Drop

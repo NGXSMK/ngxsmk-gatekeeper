@@ -92,13 +92,12 @@ docs/
 
 ## All Features Documented
 
-✅ **Security (8 features)**
+✅ **Security (9 features)** - Added Gatekeeper Agent
 ✅ **Access Control (3 features)**
 ✅ **Authentication (3 features)**
 ✅ **Request Processing (4 features)**
 ✅ **Advanced Control (4 features)**
 ✅ **Analytics & Monitoring (3 features)**
-✅ **Performance (2 features)**
+✅ **Performance & Modern API (4 features)** - Added Signals & Cache/Batch
 
-Total: **30+ middleware features** fully documented with examples!
-
+Total: **35+ middleware features** fully documented with examples!

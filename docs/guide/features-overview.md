@@ -65,12 +65,14 @@ Track, analyze, and monitor your application.
 - **A/B Testing** - Implement A/B testing with variant assignment
 - **Request Logging** - Comprehensive request logging with multiple formats
 
-## Performance (2 features)
+## Performance & Modern API (4 features)
 
-Optimize your application's performance.
+Optimize your application's performance and developer experience.
 
 - **Cache Middleware** - Cache middleware results to reduce computation
 - **Request Batching** - Batch multiple requests together for efficiency
+- **Angular Signals Support** - First-class Signals API for all core services
+- **Gatekeeper Agent** - Autonomous security monitoring sub-system
 
 ## Using Multiple Features
 

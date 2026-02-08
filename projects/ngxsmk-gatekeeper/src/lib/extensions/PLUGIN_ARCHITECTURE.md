@@ -59,7 +59,7 @@ import { createMiddleware } from 'ngxsmk-gatekeeper/lib/helpers';
 export class AuthPlugin implements GatekeeperExtension {
   readonly id = 'ngxsmk-gatekeeper-plugin-auth';
   readonly name = 'Authentication Plugin';
-  readonly version = '1.0.0';
+  readonly version = '1.1.0';
   readonly description = 'Advanced authentication with MFA support';
 
   constructor(private config: { apiKey: string; mfaRequired?: boolean }) {}
@@ -113,11 +113,11 @@ export type { AuthPluginConfig } from './plugin';
 ```json
 {
   "name": "ngxsmk-gatekeeper-plugin-auth",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "ngxsmk-gatekeeper": "^1.0.0",
+    "ngxsmk-gatekeeper": "^1.1.0",
     "@angular/core": "^17.0.0"
   }
 }
@@ -211,7 +211,7 @@ Declare peer dependencies correctly:
 ```json
 {
   "peerDependencies": {
-    "ngxsmk-gatekeeper": "^1.0.0",
+    "ngxsmk-gatekeeper": "^1.1.0",
     "@angular/core": "^17.0.0"
   }
 }
@@ -275,7 +275,7 @@ export interface FeaturePluginConfig {
 export class FeaturePlugin implements GatekeeperExtension {
   readonly id = 'ngxsmk-gatekeeper-plugin-features';
   readonly name = 'Features Plugin';
-  readonly version = '1.0.0';
+  readonly version = '1.1.0';
 
   constructor(private config: FeaturePluginConfig) {}
 
