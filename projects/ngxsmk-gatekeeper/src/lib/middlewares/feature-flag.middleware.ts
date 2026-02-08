@@ -1,4 +1,4 @@
-import { createMiddleware } from '../helpers';
+import { createMiddleware, getValueByPath } from '../helpers';
 import { MiddlewareContext } from '../core';
 import { FeatureFlagProvider } from '../providers/feature-flag.provider';
 
@@ -36,20 +36,7 @@ export interface FeatureFlagMiddlewareOptions {
   redirect?: string;
 }
 
-/**
- * Gets a value from an object using a dot-separated path
- */
-function getValueByPath(obj: unknown, path: string): unknown {
-  const keys = path.split('.');
-  let current: unknown = obj;
-  for (const key of keys) {
-    if (current == null || typeof current !== 'object') {
-      return undefined;
-    }
-    current = (current as Record<string, unknown>)[key];
-  }
-  return current;
-}
+
 
 /**
  * Creates a feature flag middleware that checks if a feature flag is enabled
@@ -98,7 +85,7 @@ export function createFeatureFlagMiddleware(
     // Priority 1: Provider from options
     // Priority 2: Provider from context (injected by guard/interceptor)
     const activeProvider = provider || (context['featureFlagProvider'] as FeatureFlagProvider | undefined);
-    
+
     if (activeProvider) {
       // Use provider to check flag asynchronously
       try {
@@ -106,7 +93,7 @@ export function createFeatureFlagMiddleware(
           flagName,
           context as Record<string, unknown>
         );
-        
+
         if (!enabled) {
           if (redirect) {
             return {
@@ -116,7 +103,7 @@ export function createFeatureFlagMiddleware(
           }
           return false;
         }
-        
+
         return true;
       } catch (error) {
         console.error(`Feature flag provider error for "${flagName}":`, error);

@@ -64,7 +64,7 @@ export interface MyAdapterConfig {
 export class MyAdapter implements AuthAdapter {
   readonly id = 'ngxsmk-gatekeeper-adapter-my';
   readonly name = 'My Authentication Adapter';
-  readonly version = '1.0.0';
+  readonly version = '1.1.0';
 
   constructor(private config: MyAdapterConfig) {}
 
@@ -138,11 +138,11 @@ export type { MyAdapterConfig } from './adapter';
 ```json
 {
   "name": "ngxsmk-gatekeeper-adapter-my",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "ngxsmk-gatekeeper": "^1.0.0",
+    "ngxsmk-gatekeeper": "^1.1.0",
     "@angular/core": "^17.0.0"
   }
 }
@@ -261,7 +261,7 @@ import { AuthAdapter } from 'ngxsmk-gatekeeper/lib/adapters';
 export class Auth0Adapter implements AuthAdapter {
   readonly id = 'ngxsmk-gatekeeper-adapter-auth0';
   readonly name = 'Auth0 Adapter';
-  readonly version = '1.0.0';
+  readonly version = '1.1.0';
 
   constructor(private config: { domain: string; clientId: string }) {}
 
@@ -281,7 +281,7 @@ import { AuthAdapter } from 'ngxsmk-gatekeeper/lib/adapters';
 export class FirebaseAdapter implements AuthAdapter {
   readonly id = 'ngxsmk-gatekeeper-adapter-firebase';
   readonly name = 'Firebase Adapter';
-  readonly version = '1.0.0';
+  readonly version = '1.1.0';
 
   constructor(private config: { apiKey: string; authDomain: string }) {}
 
@@ -301,7 +301,7 @@ import { AuthAdapter } from 'ngxsmk-gatekeeper/lib/adapters';
 export class JWTAdapter implements AuthAdapter {
   readonly id = 'ngxsmk-gatekeeper-adapter-jwt';
   readonly name = 'Custom JWT Adapter';
-  readonly version = '1.0.0';
+  readonly version = '1.1.0';
 
   constructor(private config: { secret: string; issuer?: string }) {}
 

@@ -4,7 +4,7 @@
  * Manages showcase entries and provides search/filter functionality
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -25,7 +25,10 @@ import { getDefaultShowcaseEntries } from './showcase.data';
 })
 export class ShowcaseService {
   private entriesSubject = new BehaviorSubject<ShowcaseEntry[]>(getDefaultShowcaseEntries());
-  private entries: ShowcaseEntry[] = getDefaultShowcaseEntries();
+  private entriesList: ShowcaseEntry[] = getDefaultShowcaseEntries();
+
+  /** Signal of all entries */
+  readonly entries: WritableSignal<ShowcaseEntry[]> = signal<ShowcaseEntry[]>(getDefaultShowcaseEntries());
 
   /** Observable of all entries */
   readonly entries$: Observable<ShowcaseEntry[]> = this.entriesSubject.asObservable();
@@ -252,19 +255,21 @@ export class ShowcaseService {
    * Add entry (for programmatic addition)
    */
   addEntry(entry: ShowcaseEntry): void {
-    this.entries.push(entry);
-    this.entriesSubject.next([...this.entries]);
+    this.entriesList.push(entry);
+    this.entriesSubject.next([...this.entriesList]);
+    this.entries.set([...this.entriesList]);
   }
 
   /**
    * Update entry
    */
   updateEntry(id: string, updates: Partial<ShowcaseEntry>): void {
-    const index = this.entries.findIndex((e) => e.id === id);
+    const index = this.entriesList.findIndex((e) => e.id === id);
     if (index !== -1) {
-      const existing = this.entries[index];
-      this.entries[index] = { ...existing, ...updates } as ShowcaseEntry;
-      this.entriesSubject.next([...this.entries]);
+      const existing = this.entriesList[index];
+      this.entriesList[index] = { ...existing, ...updates } as ShowcaseEntry;
+      this.entriesSubject.next([...this.entriesList]);
+      this.entries.set([...this.entriesList]);
     }
   }
 
@@ -272,18 +277,20 @@ export class ShowcaseService {
    * Remove entry
    */
   removeEntry(id: string): void {
-    this.entries = this.entries.filter((e) => e.id !== id);
-    this.entriesSubject.next([...this.entries]);
+    this.entriesList = this.entriesList.filter((e) => e.id !== id);
+    this.entriesSubject.next([...this.entriesList]);
+    this.entries.set([...this.entriesList]);
   }
 
   /**
    * Increment view count
    */
   incrementViews(id: string): void {
-    const entry = this.entries.find((e) => e.id === id);
+    const entry = this.entriesList.find((e) => e.id === id);
     if (entry) {
       entry.views = (entry.views ?? 0) + 1;
-      this.entriesSubject.next([...this.entries]);
+      this.entriesSubject.next([...this.entriesList]);
+      this.entries.set([...this.entriesList]);
     }
   }
 
@@ -291,10 +298,11 @@ export class ShowcaseService {
    * Increment like count
    */
   incrementLikes(id: string): void {
-    const entry = this.entries.find((e) => e.id === id);
+    const entry = this.entriesList.find((e) => e.id === id);
     if (entry) {
       entry.likes = (entry.likes ?? 0) + 1;
-      this.entriesSubject.next([...this.entries]);
+      this.entriesSubject.next([...this.entriesList]);
+      this.entries.set([...this.entriesList]);
     }
   }
 
@@ -302,8 +310,9 @@ export class ShowcaseService {
    * Load entries
    */
   private loadEntries(): void {
-    this.entries = getDefaultShowcaseEntries();
-    this.entriesSubject.next([...this.entries]);
+    this.entriesList = getDefaultShowcaseEntries();
+    this.entriesSubject.next([...this.entriesList]);
+    this.entries.set([...this.entriesList]);
   }
 }
 

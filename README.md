@@ -60,6 +60,8 @@ const routes: Routes = [
 - **Zero Dependencies** - Lightweight core, no bloat
 - **Optimized Execution** - Fast middleware chains, minimal overhead
 - **Built-in Benchmarking** - Identify bottlenecks automatically
+- **Angular Signals** - Fully optimized for Angular Signals (17+)
+- **SEO Friendly** - Doesn't block crawlers; supports proper status codes and redirects
 
 ### Developer Experience That Delights
 

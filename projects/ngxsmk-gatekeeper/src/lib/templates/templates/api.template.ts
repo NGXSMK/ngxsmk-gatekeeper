@@ -51,7 +51,7 @@ export function createAPITemplate(): Template {
       description: 'Template for protecting API endpoints with API keys, rate limiting, and request validation',
       category: TemplateCategory.API,
       tags: ['api', 'rest', 'graphql', 'endpoints'],
-      version: '1.0.0',
+      version: '1.1.0',
       examples: [
         'REST APIs',
         'GraphQL endpoints',

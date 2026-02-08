@@ -46,7 +46,7 @@ import { LicenseVerifier, LicenseVerificationResult } from 'ngxsmk-gatekeeper/li
 export class MyLicenseVerifier implements LicenseVerifier {
   readonly id = '@vendor/gatekeeper-license-verifier';
   readonly name = 'My License Verifier';
-  readonly version = '1.0.0';
+  readonly version = '1.1.0';
 
   async verify(licenseKey: string): Promise<LicenseVerificationResult> {
     try {

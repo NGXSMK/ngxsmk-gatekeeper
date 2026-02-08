@@ -4,7 +4,7 @@
  * Integrates with middleware execution to collect and stream observability events
  */
 
-import { Injectable, Optional, Inject } from '@angular/core';
+import { Injectable, Optional, Inject, signal, WritableSignal } from '@angular/core';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import {
   ObservabilityEventType,
@@ -34,6 +34,12 @@ export class ObservabilityService {
   private eventSubject = new Subject<ObservabilityEventUnion>();
   private statsSubject = new BehaviorSubject<AggregatedStats | null>(null);
   private connectedSubject = new BehaviorSubject<boolean>(false);
+
+  /** Signal for aggregated stats */
+  readonly stats: WritableSignal<AggregatedStats | null> = signal<AggregatedStats | null>(null);
+
+  /** Signal for connection status */
+  readonly connected: WritableSignal<boolean> = signal<boolean>(false);
 
   /** Observable stream of events */
   readonly events$: Observable<ObservabilityEventUnion> = this.eventSubject.asObservable();
@@ -70,10 +76,12 @@ export class ObservabilityService {
     const handlers: WebSocketClientHandlers = {
       onOpen: () => {
         this.connectedSubject.next(true);
+        this.connected.set(true);
         console.log('Observability: Connected to WebSocket server');
       },
       onClose: () => {
         this.connectedSubject.next(false);
+        this.connected.set(false);
         console.log('Observability: Disconnected from WebSocket server');
       },
       onError: (error) => {
@@ -84,6 +92,7 @@ export class ObservabilityService {
       },
       onStats: (stats) => {
         this.statsSubject.next(stats);
+        this.stats.set(stats);
       },
     };
 
@@ -112,6 +121,7 @@ export class ObservabilityService {
       this.wsClient.disconnect();
       this.wsClient = null;
       this.connectedSubject.next(false);
+      this.connected.set(false);
     }
   }
 

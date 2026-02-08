@@ -55,22 +55,22 @@ const entry: ShowcaseEntry = {
 
 ## Usage
 
-### Basic Setup
+### Basic Setup (with Signals)
 
 ```typescript
 import { ShowcaseService } from 'ngxsmk-gatekeeper/lib/showcase';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-showcase',
   template: `
-    <div *ngFor="let entry of entries$ | async">
+    <div *ngFor="let entry of entries()">
       <h3>{{ entry.title }}</h3>
     </div>
   `,
 })
-export class ShowcaseComponent implements OnInit {
-  entries$ = this.showcaseService.getAllEntries();
+export class ShowcaseComponent {
+  entries = this.showcaseService.entries;
 
   constructor(private showcaseService: ShowcaseService) {}
 }

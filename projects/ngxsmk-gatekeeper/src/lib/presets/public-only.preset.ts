@@ -1,5 +1,4 @@
-import { definePipeline } from '../helpers';
-import { createMiddleware } from '../helpers';
+import { definePipeline, createMiddleware, getValueByPath } from '../helpers';
 import { MiddlewareContext } from '../core';
 
 /**
@@ -59,20 +58,7 @@ export function publicOnlyPreset(
     authPath = 'user.isAuthenticated',
   } = options;
 
-  /**
-   * Gets a value from an object using a dot-separated path
-   */
-  function getValueByPath(obj: unknown, path: string): unknown {
-    const keys = path.split('.');
-    let current: unknown = obj;
-    for (const key of keys) {
-      if (current == null || typeof current !== 'object') {
-        return undefined;
-      }
-      current = (current as Record<string, unknown>)[key];
-    }
-    return current;
-  }
+
 
   const middleware = createMiddleware('public-only', (context: MiddlewareContext) => {
     if (!redirectAuthenticated) {
@@ -82,7 +68,7 @@ export function publicOnlyPreset(
 
     // Check if user is authenticated
     const isAuthenticated = getValueByPath(context, authPath);
-    
+
     if (Boolean(isAuthenticated)) {
       // User is authenticated, redirect them away
       return {

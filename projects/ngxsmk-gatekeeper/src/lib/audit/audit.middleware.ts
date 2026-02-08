@@ -1,22 +1,7 @@
-import { createMiddleware } from '../helpers';
+import { createMiddleware, getValueByPath } from '../helpers';
 import { MiddlewareContext } from '../core';
 import { AuditLogEntry, AuditMiddlewareConfig } from './audit.types';
 import { sanitizeObject, extractUserId } from './audit.sanitize';
-
-/**
- * Gets a value from an object using a dot-separated path
- */
-function getValueByPath(obj: unknown, path: string): unknown {
-  const keys = path.split('.');
-  let current: unknown = obj;
-  for (const key of keys) {
-    if (current == null || typeof current !== 'object') {
-      return undefined;
-    }
-    current = (current as Record<string, unknown>)[key];
-  }
-  return current;
-}
 
 /**
  * Creates an audit middleware that logs access decisions
@@ -75,9 +60,9 @@ export function createAuditMiddleware(
   const sinkArray = Array.isArray(sinks) ? sinks : [sinks];
 
   return createMiddleware('audit', async (context: MiddlewareContext) => {
-    const resource = 
-      (context['url'] as string) || 
-      (context['path'] as string) || 
+    const resource =
+      (context['url'] as string) ||
+      (context['path'] as string) ||
       (context['route'] as { path?: string } | undefined)?.path ||
       'unknown';
 
@@ -90,7 +75,7 @@ export function createAuditMiddleware(
     let metadata: Record<string, unknown> | undefined;
     if (includeMetadata) {
       const sanitizedContext = sanitizeObject(context, excludeFields);
-      
+
       if (metadataFields.length > 0) {
         metadata = {};
         for (const field of metadataFields) {
@@ -171,20 +156,20 @@ export async function logAuditDecision(
 
   let metadata: Record<string, unknown> | undefined;
   if (includeMetadata) {
-      const sanitizedContext = sanitizeObject(context, excludeFields);
-      
-      if (metadataFields.length > 0) {
-        metadata = {};
+    const sanitizedContext = sanitizeObject(context, excludeFields);
+
+    if (metadataFields.length > 0) {
+      metadata = {};
       for (const field of metadataFields) {
         const value = getValueByPath(sanitizedContext, field);
         if (value !== undefined) {
-            metadata[field] = value;
-          }
+          metadata[field] = value;
         }
-      } else {
-        metadata = sanitizedContext;
       }
+    } else {
+      metadata = sanitizedContext;
     }
+  }
 
   const contextType: 'route' | 'http' = context['request'] ? 'http' : 'route';
 

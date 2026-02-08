@@ -3,16 +3,16 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
   title: 'ngxsmk-gatekeeper',
   description: 'A framework-agnostic middleware engine for Angular that provides route and HTTP request protection through a composable middleware pattern.',
-  
+
   // Base URL for deployment
   // For GitHub Pages: use '/ngxsmk-gatekeeper/' for project pages
   // Use '/' if you have a custom domain or user/org page
   // Can be overridden with VITEPRESS_BASE environment variable
   base: process.env.VITEPRESS_BASE || (process.env.NODE_ENV === 'production' ? '/ngxsmk-gatekeeper/' : '/'),
-  
+
   // Language
   lang: 'en-US',
-  
+
   // Logo and meta configuration
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
@@ -26,30 +26,30 @@ export default defineConfig({
     ['meta', { name: 'twitter:title', content: 'ngxsmk-gatekeeper' }],
     ['meta', { name: 'twitter:description', content: 'Middleware Engine for Angular' }],
   ],
-  
+
   // Theme configuration
   themeConfig: {
     logo: '/logo.svg',
-    
+
     // Site title in nav
     siteTitle: 'ngxsmk-gatekeeper',
-    
+
     // Edit link
     editLink: {
       pattern: 'https://github.com/NGXSMK/ngxsmk-gatekeeper/edit/main/docs/:path',
       text: 'Edit this page on GitHub',
     },
-    
+
     // Last updated
     lastUpdated: {
       text: 'Last updated',
     },
-    
+
     // Social links
     socialLinks: [
       { icon: 'github', link: 'https://github.com/NGXSMK/ngxsmk-gatekeeper' }
     ],
-    
+
     // Navbar
     nav: [
       { text: 'Home', link: '/' },
@@ -58,7 +58,7 @@ export default defineConfig({
       { text: 'API', link: '/api/' },
       { text: 'GitHub', link: 'https://github.com/NGXSMK/ngxsmk-gatekeeper' }
     ],
-    
+
     // Sidebar
     sidebar: {
       '/': [
@@ -87,7 +87,14 @@ export default defineConfig({
             { text: 'Features Overview', link: '/guide/features-overview' },
             { text: 'Route Protection', link: '/guide/route-protection' },
             { text: 'HTTP Protection', link: '/guide/http-protection' },
-            { text: 'Context & State', link: '/guide/context-state' }
+            { text: 'Context & State', link: '/guide/context-state' },
+            { text: 'Angular Signals', link: '/guide/signals' }
+          ]
+        },
+        {
+          text: 'Security Agent',
+          items: [
+            { text: 'Gatekeeper Agent', link: '/guide/agent' }
           ]
         },
         {
@@ -153,13 +160,13 @@ export default defineConfig({
         }
       ]
     },
-    
+
     // Footer
     footer: {
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2025 ngxsmk-gatekeeper'
     },
-    
+
     // Search
     search: {
       provider: 'local',
@@ -185,28 +192,28 @@ export default defineConfig({
         }
       }
     },
-    
+
     // Outline configuration
     outline: {
       level: [2, 3],
       label: 'On this page'
     },
-    
+
     // Doc footer
     docFooter: {
       prev: 'Previous page',
       next: 'Next page'
     },
-    
+
     // Return to top
     returnToTopLabel: 'Return to top',
-    
+
     // Dark mode
     darkModeSwitchLabel: 'Appearance',
     sidebarMenuLabel: 'Menu',
     lastUpdatedText: 'Last updated'
   },
-  
+
   // Markdown configuration
   markdown: {
     lineNumbers: true,
@@ -214,12 +221,12 @@ export default defineConfig({
       // Add custom markdown plugins here if needed
     }
   },
-  
+
   // Build configuration
   buildEnd: async (siteConfig) => {
     // Custom build logic if needed
   },
-  
+
   // Ignore dead links during build
   ignoreDeadLinks: true
 });

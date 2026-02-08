@@ -1,22 +1,7 @@
-import { createMiddleware } from '../helpers';
+import { createMiddleware, getValueByPath } from '../helpers';
 import { MiddlewareContext, MiddlewareResponse } from '../core';
 import { hasPermission, hasAllPermissions } from './permission.utils';
 import { resolveRoles, RoleHierarchy } from './role-hierarchy';
-
-/**
- * Gets a value from an object using a dot-separated path
- */
-function getValueByPath(obj: unknown, path: string): unknown {
-  const keys = path.split('.');
-  let current: unknown = obj;
-  for (const key of keys) {
-    if (current == null || typeof current !== 'object') {
-      return undefined;
-    }
-    current = (current as Record<string, unknown>)[key];
-  }
-  return current;
-}
 
 /**
  * Configuration options for permission middleware
@@ -147,8 +132,8 @@ export function permissionMiddleware(
     redirect,
   } = options;
 
-  const requiredPerms = Array.isArray(requiredPermissions) 
-    ? requiredPermissions 
+  const requiredPerms = Array.isArray(requiredPermissions)
+    ? requiredPermissions
     : [requiredPermissions];
 
   return createMiddleware('permission', (context: MiddlewareContext) => {
@@ -165,18 +150,18 @@ export function permissionMiddleware(
 
     // Get user permissions
     const userPermissions = getValueByPath(context, permissionsPath);
-    const userPermsArray = Array.isArray(userPermissions) 
+    const userPermsArray = Array.isArray(userPermissions)
       ? userPermissions as string[]
       : [];
 
     // Get user roles
     const userRoles = getValueByPath(context, rolesPath);
-    const userRolesArray = Array.isArray(userRoles) 
+    const userRolesArray = Array.isArray(userRoles)
       ? userRoles as string[]
       : [];
 
     // Resolve roles with hierarchy if provided
-    const resolvedRoles = roleHierarchy 
+    const resolvedRoles = roleHierarchy
       ? resolveRoles(userRolesArray, roleHierarchy)
       : userRolesArray;
 

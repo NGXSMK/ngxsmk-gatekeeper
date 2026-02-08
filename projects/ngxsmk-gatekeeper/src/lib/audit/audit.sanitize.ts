@@ -1,38 +1,8 @@
+import { getValueByPath, DEFAULT_SENSITIVE_FIELDS } from '../helpers';
+
 /**
  * PII sanitization utilities for audit logging
  */
-
-/**
- * Default PII fields that should never be logged
- */
-const DEFAULT_PII_FIELDS = [
-  'password',
-  'token',
-  'secret',
-  'key',
-  'auth',
-  'authorization',
-  'cookie',
-  'session',
-  'creditCard',
-  'creditcard',
-  'cardNumber',
-  'ssn',
-  'socialSecurity',
-  'email',
-  'phone',
-  'address',
-  'zip',
-  'postal',
-  'firstName',
-  'lastName',
-  'fullName',
-  'name',
-  'dob',
-  'dateOfBirth',
-  'ip',
-  'ipAddress',
-];
 
 /**
  * Sanitizes an object by removing PII fields
@@ -49,12 +19,12 @@ export function sanitizeObject(
     return {};
   }
 
-  const allExcludeFields = [...DEFAULT_PII_FIELDS, ...excludeFields].map(f => f.toLowerCase());
+  const allExcludeFields = [...DEFAULT_SENSITIVE_FIELDS, ...excludeFields].map(f => f.toLowerCase());
   const sanitized: Record<string, unknown> = {};
 
   for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
     const keyLower = key.toLowerCase();
-    
+
     // Skip PII fields
     if (allExcludeFields.some(field => keyLower.includes(field))) {
       continue;
@@ -65,7 +35,7 @@ export function sanitizeObject(
       sanitized[key] = sanitizeObject(value, excludeFields);
     } else if (Array.isArray(value)) {
       // Sanitize array items
-      sanitized[key] = value.map(item => 
+      sanitized[key] = value.map(item =>
         typeof item === 'object' && item !== null
           ? sanitizeObject(item, excludeFields)
           : item
@@ -105,18 +75,5 @@ export function extractUserId(
   return undefined;
 }
 
-/**
- * Gets a value from an object using a dot-separated path
- */
-function getValueByPath(obj: unknown, path: string): unknown {
-  const keys = path.split('.');
-  let current: unknown = obj;
-  for (const key of keys) {
-    if (current == null || typeof current !== 'object') {
-      return undefined;
-    }
-    current = (current as Record<string, unknown>)[key];
-  }
-  return current;
-}
+
 

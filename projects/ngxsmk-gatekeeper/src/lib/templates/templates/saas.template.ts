@@ -54,7 +54,7 @@ export function createSaaSTemplate(): Template {
       description: 'Complete template for multi-tenant SaaS applications with authentication, roles, rate limiting, and analytics',
       category: TemplateCategory.SaaS,
       tags: ['saas', 'multi-tenant', 'subscription', 'enterprise'],
-      version: '1.0.0',
+      version: '1.1.0',
       examples: [
         'Multi-tenant SaaS platforms',
         'Subscription-based applications',

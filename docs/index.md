@@ -50,6 +50,12 @@ features:
   - icon: 📋
     title: Templates
     details: Pre-built configurations for SaaS, e-commerce, API, and more
+  - icon: 🛰️
+    title: Angular Signals
+    details: First-class support for Angular Signals (17+) across all core services
+  - icon: 🛡️
+    title: Security Agent
+    details: Autonomous background agent for real-time monitoring and security audits
   - icon: 🌟
     title: Showcase
     details: Real-world implementations and case studies from the community

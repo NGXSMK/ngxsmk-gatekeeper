@@ -1,4 +1,4 @@
-import { createMiddleware } from '../helpers';
+import { createMiddleware, getValueByPath } from '../helpers';
 import { MiddlewareContext } from '../core';
 
 /**
@@ -62,20 +62,7 @@ export interface ConcurrentLimitMiddlewareOptions {
   message?: string;
 }
 
-/**
- * Gets a value from an object using a dot-separated path
- */
-function getValueByPath(obj: unknown, path: string): unknown {
-  const keys = path.split('.');
-  let current: unknown = obj;
-  for (const key of keys) {
-    if (current == null || typeof current !== 'object') {
-      return undefined;
-    }
-    current = (current as Record<string, unknown>)[key];
-  }
-  return current;
-}
+
 
 /**
  * Creates middleware that limits concurrent requests
@@ -85,10 +72,10 @@ function getValueByPath(obj: unknown, path: string): unknown {
  *
  * @example
  * ```typescript
- * const concurrentLimitMiddleware = createConcurrentLimitMiddleware({
- *   maxConcurrent: 10,
- *   perUser: true,
- *   queueStrategy: 'reject'
+  * const concurrentLimitMiddleware = createConcurrentLimitMiddleware({
+    *   maxConcurrent: 10,
+    *   perUser: true,
+    *   queueStrategy: 'reject'
  * });
  * ```
  */
@@ -127,11 +114,11 @@ export function createConcurrentLimitMiddleware(
     if (perUser) {
       const userId = getValueByPath(context, userIdPath);
       if (userId && typeof userId === 'string') {
-        key = `user:${userId}`;
+        key = `user:${userId} `;
       }
     }
 
-    const requestId = `${Date.now()}-${Math.random()}`;
+    const requestId = `${Date.now()} -${Math.random()} `;
     const now = Date.now();
 
     // Get current concurrent requests
