@@ -4,9 +4,10 @@
 
 Compliance Mode is designed for **SOC2, ISO 27001, and similar compliance frameworks**. It ensures that your access control system meets audit requirements by providing:
 
-1. **Deterministic Execution Order**: Middleware always executes in the same, documented order
-2. **Explicit Allow/Deny Outcomes**: All decisions are clear, traceable, and documented
-3. **Structured Logs**: Parseable logs (JSON, CSV, JSONL) for compliance audits
+- **Deterministic Execution Order**: Middleware always executes in the same, documented order
+- **Explicit Allow/Deny Outcomes**: All decisions are clear, traceable, and documented
+- **Structured Logs**: Parseable logs (JSON, CSV, JSONL) for compliance audits
+- **Autonomous Auditing**: Continuous security scanning via the [Gatekeeper Agent](../agent/README.md) (v1.1.0)
 
 ## Key Features
 

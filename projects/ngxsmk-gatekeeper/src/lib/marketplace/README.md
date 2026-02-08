@@ -9,6 +9,7 @@ The ngxsmk-gatekeeper marketplace provides a centralized registry for discoverin
 - **npm Integration** - Direct integration with npm registry
 - **Installation Helpers** - Get installation commands for any package manager
 - **Update Management** - Check for plugin updates
+- **Angular Signals** - Reactive status and plugin metadata (v1.1.0)
 
 ## Architecture
 
